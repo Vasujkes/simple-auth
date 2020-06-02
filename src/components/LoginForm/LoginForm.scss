@@ -1,0 +1,10 @@
+.auth {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+ &__top { 
+   text-align: center;
+   margin-bottom: 20px;
+ }
+}
