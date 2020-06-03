@@ -1,16 +1,18 @@
 import { withFormik } from "formik";
 
-import { LoginForm } from "../../components";
+import { EditForm } from "../../components";
 import validateForm from "../../utils/validate";
 
 import Actions from "../../store/actions";
-import store from "../../store/store";
 
-const LoginFormContainer = withFormik({
+const EditFormContainer = withFormik({
   enableReinitialize: true,
   mapPropsToValues: () => ({
     username: "",
     password: "",
+    first_name: "",
+    last_name: "",
+    is_active: true,
   }),
   validate: (values) => {
     let errors = {};
@@ -19,19 +21,13 @@ const LoginFormContainer = withFormik({
   },
 
   handleSubmit: (values, { setSubmitting, props }) => {
-    store.dispatch(Actions.fetchUserLogin(values)).then((response) => {
-      if (response.status === "success") {
-        setTimeout(() => {
-          props.history.push("/");
-        }, 500);
-        setSubmitting(false);
-      }
-
+    const { id } = props.currentUser;
+    Actions.updateUser(values, id).then((res) => {
       setSubmitting(false);
     });
   },
 
   displayName: "LoginForm",
-})(LoginForm);
+})(EditForm);
 
-export default LoginFormContainer;
+export default EditFormContainer;

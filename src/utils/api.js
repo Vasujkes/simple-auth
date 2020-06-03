@@ -1,25 +1,9 @@
 import { axios } from "./";
-import { openNotification } from "./helper";
 
 export default {
-  signIn: (postData) =>
-    axios.post("api-token-auth/", postData).then(
-      (response) => {
-        openNotification({
-          text: "Отлично!",
-          type: "success",
-          title: "Авторизация успешна",
-        });
-        return response
-      },
-      (error) => {
-        openNotification({
-          text: "Неверная почта или пароль",
-          type: "error",
-          title: "Ошибка при авторизации",
-        });
-        return error
-      }
-    ),
-  fetchData: () => axios.get("api/v1/users/"),
+  signIn: (postData) => axios.post("api-token-auth/", postData),
+  getAll: () => axios.get("api/v1/users/"),
+  findUser: (id) => axios.get("api/v1/users/" + id),
+  updateUser: (putData, id) => axios.put(`api/v1/users/${id}/`, putData),
+  deleteUser: (id) => axios.delete("api/v1/users/" + id),
 };
